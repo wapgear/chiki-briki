@@ -7,20 +7,15 @@ import {Element} from "../models/elements.model";
 export const resolvers = {
   StructureChildren: {
     children: async (object: any) => {
-      console.log("########")
-      console.log("########")
-      console.log("########")
-      console.log("########")
-      console.log("########")
-      console.log("########")
-      console.log("####OBJECT#####")
-      console.log(JSON.stringify(object, null, 2))
-      let element = {}
-      // if (object.element_id) {
-      //   element = await Element.findById(mongoose.Types.ObjectId(object.element_id))
-      // }
-      let data = await merge(object, element)
-      return [data]
+      object = object.children || []
+      object = object.map(async (obj: any) => {
+        let el = {}
+        if (obj.element_id) {
+          el = await Element.findById(mongoose.Types.ObjectId(obj.element_id))
+        }
+        return merge(obj, el)
+      })
+      return object
     }
   },
   Project: {
