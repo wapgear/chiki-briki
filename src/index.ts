@@ -6,6 +6,7 @@ const { makeExecutableSchema } = require('graphql-tools');
 import {typeDefs} from "./types";
 import {resolvers} from "./resolvers";
 const { ApolloEngine } = require('apollo-engine');
+import cors from "cors"
 
 mongoose.connect(`mongodb://localhost/poc_ma`);
 
@@ -20,7 +21,7 @@ const schema = makeExecutableSchema({
 });
 
 const app = express();
-
+app.use(cors())
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 

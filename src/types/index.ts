@@ -1,11 +1,12 @@
 export const typeDefs = `
   type Query {
     demo: String
-    project(id: String): Project
+    project(id: String!): Project
+    element(id: String!): Element
   }
   
   type Element {
-      element_id: String
+      _id: String
       isUnique: Boolean
       template: String
       properties: ElementProperties
@@ -37,8 +38,12 @@ export const typeDefs = `
     structure: [StructureChildren]
  }
  
+ type UpdateElementMutation {
+    result: String
+ }
+ 
  type Mutation {
-    example: String
+    updateElement(element_id: String!, key: String!, value: String!): Element
  }
  
  type Subscription {
